@@ -1,0 +1,14 @@
+{
+  "name": "@transmit-security/reactjs-risk",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:transmitsecurity-dev/riskid-reactjs-ts-risk.git",
+  "author": "RiskID Dev Team <riskid@transmitsecurity.com>",
+  "license": "SEE LICENSE IN package/LICENSE",
+  "private": true,
+  "devDependencies": {
+    "create-react-app": "5.0.1",
+    "typescript": "4.9.4"
+  },
+  "packageManager": "yarn@3.4.1"
+}
