@@ -1,0 +1,64 @@
+name: CI
+
+env:
+  NODE_VERSION: 16.14
+  RUNID_VERSION_SUFFIX: ${{ github.run_id }}.${{ github.run_attempt }}
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Use Node.js v${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install yarn
+        run: npm install --global yarn
+
+      - name: Install dependencies
+        run: |
+          cd package
+          yarn
+
+      - name: Audit
+        run: |
+          yarn global add improved-yarn-audit
+          yarn run ci-audit
+      - name: Lint
+        run: yarn lint
+
+      - name: Build
+        run: yarn build
+
+      - name: Test
+        run: yarn test
+      - name: Pack
+        run: |
+          cd dist
+          yarn pack
+          cd ..
+      - name: Archive NPM package
+        uses: actions/upload-artifact@v3
+        with:
+          if-no-files-found: error
+          retention-days: 30
+          name: react-ts-riskid-npm-package
+          path: transmit-security-riskid-reactjs-ts-v*.tgz
+      - name: Archive failure data
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: failure-data
+          path: |
+            /home/runner/.npm/_logs
