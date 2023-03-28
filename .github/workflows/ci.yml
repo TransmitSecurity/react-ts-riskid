@@ -27,18 +27,24 @@ jobs:
         run: npm install --global yarn
 
       - name: Install dependencies
-        working-directory: ./package
-        run: yarn
+        run: |
+          cd package
+          yarn
 
       - name: Audit
         run: |
           yarn global add improved-yarn-audit
+          cd package
           yarn run ci-audit
       - name: Lint
-        run: yarn lint
+        run: |
+          cd package
+          yarn lint
 
       - name: Build
-        run: yarn build
+        run: |
+          cd package
+          yarn build
 
       - name: Test
         run: yarn test
