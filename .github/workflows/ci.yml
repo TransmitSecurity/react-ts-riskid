@@ -53,7 +53,7 @@ jobs:
 
       - name: Pack
         run: |
-          cd dist
+          cd package/dist
           yarn pack
           cd ..
       - name: Archive NPM package
