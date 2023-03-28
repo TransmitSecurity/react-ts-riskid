@@ -62,7 +62,7 @@ jobs:
           if-no-files-found: error
           retention-days: 30
           name: react-ts-riskid-npm-package
-          path: transmit-security-riskid-reactjs-ts-v*.tgz
+          path: package/transmit-security-riskid-reactjs-ts-v*.tgz
       - name: Archive failure data
         if: ${{ failure() }}
         uses: actions/upload-artifact@v3
