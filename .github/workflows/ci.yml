@@ -47,7 +47,10 @@ jobs:
           yarn build
 
       - name: Test
-        run: yarn test
+        run: |
+          cd package  
+          yarn test
+
       - name: Pack
         run: |
           cd dist
