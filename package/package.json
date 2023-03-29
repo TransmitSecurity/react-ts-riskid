@@ -1,10 +1,14 @@
 {
     "name": "@transmitsecurity/riskid-reactjs-ts",
-    "version": "1.0.9",
+    "version": "1.0.10",
     "license": "SEE LICENSE IN LICENSE",
-    "homepage": ".",
     "module": "./dist/index.es.js",
     "main": "./dist/index.es.js",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/TransmitSecurity/react-ts-riskid.git"
+      },
+    "homepage": "https://github.com/TransmitSecurity/react-ts-riskid/blob/main/package/README.md",
     "exports": {
         ".": {
             "import": "./dist/index.es.js",
