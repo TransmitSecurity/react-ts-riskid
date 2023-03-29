@@ -1,0 +1,122 @@
+name: Release Artifact
+
+env:
+  NODE_VERSION: 16.14
+  RUNID_VERSION_SUFFIX: ${{ github.run_id }}.${{ github.run_attempt }}
+
+on:
+  release:
+    types: [created]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Use Node.js v${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          always-auth: true
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install yarn
+        run: npm install --global yarn
+
+      - name: Install dependencies
+        run: |
+          cd package
+          yarn
+
+      - name: Build
+        run: |
+          cd package
+          yarn build
+
+      - name: Cache workspace
+        uses: actions/cache@v3
+        with:
+          path: ${{ github.workspace }}
+          key: ${{ runner.os }}-${{ env.RUNID_VERSION_SUFFIX }}
+
+      - name: Archive failure data
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: failure-data
+          path: |
+            /home/runner/.npm/_logs
+  publish_github:
+    runs-on: ubuntu-latest
+    needs: [build]
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Use Node.js v${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: 'https://npm.pkg.github.com'
+          always-auth: true
+
+      - name: Fetch cached workspace
+        uses: actions/cache@v3
+        with:
+          path: ${{ github.workspace }}
+          key: ${{ runner.os }}-${{ env.RUNID_VERSION_SUFFIX }}
+
+      - name: Publish to GitHub packages
+        run: yarn publish --access=public
+        working-directory: ./package
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Archive failure data
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: failure-data
+          path: |
+            /home/runner/.npm/_logs
+  publish_npmjs:
+    runs-on: ubuntu-latest
+    needs: [build]
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Use Node.js v${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: 'https://registry.npmjs.org'
+          always-auth: true
+
+      - name: Fetch cached workspace
+        uses: actions/cache@v3
+        with:
+          path: ${{ github.workspace }}
+          key: ${{ runner.os }}-${{ env.RUNID_VERSION_SUFFIX }}
+
+      - name: Publish to npmjs
+        run: npm publish --access=public
+        working-directory: ./package
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_UPLOAD_TOKEN }}
+
+      - name: Archive failure data
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: failure-data
+          path: |
+            /home/runner/.npm/_logs
