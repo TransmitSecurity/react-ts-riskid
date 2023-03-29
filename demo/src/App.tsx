@@ -1,6 +1,5 @@
-import React from 'react';
 import logo from './logo.svg';
-import { TSAccountProtectionProvider } from '@transmit-security/riskid-reactjs-ts';
+import { TSAccountProtectionProvider } from '@transmitsecurity/riskid-reactjs-ts';
 import InnerComponent from './InnerComponent';
 import './App.css';
 

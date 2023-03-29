@@ -6,6 +6,7 @@ import dts from 'vite-plugin-dts';
 
 export default defineConfig(({ command }) => ({
   plugins: [
+    dts(),
     react(),
 
     /** Allows us importing svg's */
@@ -13,7 +14,6 @@ export default defineConfig(({ command }) => ({
 
     /** Created an override on the server to redirect all requests to the dev server to index.html (so react-router can handle it) */
     pluginRewriteAll(),
-    dts(),
   ],
   build: {
     emptyOutDir: false,
@@ -30,7 +30,7 @@ export default defineConfig(({ command }) => ({
     },
     lib: {
       entry: './index.ts',
-      name: '@transmit-security/riskid-reactjs-ts',
+      name: '@transmitsecurity/riskid-reactjs-ts',
       formats: ['es'],
       fileName: format => {
         return `index.${format}.js`;

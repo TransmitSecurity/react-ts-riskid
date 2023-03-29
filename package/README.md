@@ -46,7 +46,7 @@ The example below demonstrates triggering a login event from a login button, set
 - `clearUser()` clears the user context for all subsequent events in the browser session.
 
 ```js
-import { useTSAccountProtection } from '@transmit-security/riskid-reactjs-ts';
+import { useTSAccountProtection } from '@transmitsecurity/riskid-reactjs-ts';
 
 function InnerComponent() {
   const { triggerActionEvent, setAuthenticatedUser, clearUser } = useTSAccountProtection();

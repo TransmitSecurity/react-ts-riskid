@@ -13,7 +13,7 @@
     "forceConsistentCasingInFileNames": true,
 
     "paths": {
-      "@transmit-security/riskid-reactjs-ts": [
+      "@transmitsecurity/riskid-reactjs-ts": [
         "./package",
       ]
     },
