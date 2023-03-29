@@ -10,8 +10,6 @@ on:
   workflow_dispatch:
 
 jobs:
-
-
   build:
     runs-on: ubuntu-latest
     permissions:
@@ -37,7 +35,9 @@ jobs:
           yarn
 
       - name: Build
-        run: yarn build
+        run: |
+          cd package
+          yarn build
 
       - name: Cache workspace
         uses: actions/cache@v3
@@ -75,7 +75,7 @@ jobs:
 
       - name: Publish to GitHub packages
         run: yarn publish --access=public
-        working-directory: ./dist
+        working-directory: ./package
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -109,7 +109,7 @@ jobs:
 
       - name: Publish to npmjs
         run: npm publish --access=public
-        working-directory: ./dist
+        working-directory: ./package
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPMJS_UPLOAD_TOKEN }}
 

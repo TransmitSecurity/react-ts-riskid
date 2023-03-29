@@ -1,8 +1,7 @@
 {
-    "name": "@transmit-security/riskid-reactjs-ts",
+    "name": "@transmitsecurity/riskid-reactjs-ts",
     "version": "1.0.8",
-    "license": "UNLICENSED",
-    "private": "true",
+    "license": "SEE LICENSE IN LICENSE",
     "homepage": ".",
     "module": "./dist/index.es.js",
     "main": "./dist/index.es.js",
