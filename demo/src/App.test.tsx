@@ -1,11 +1,10 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import App from './App';
 
 const mockedTransmit = jest.fn();
-jest.mock('@transmit-security/riskid-reactjs-ts', () => ({
-    ...jest.requireActual('@transmit-security/riskid-reactjs-ts'),
+jest.mock('@transmitsecurity/riskid-reactjs-ts', () => ({
+    ...jest.requireActual('@transmitsecurity/riskid-reactjs-ts'),
     useTSAccountProtection: () => ({
         triggerActionEvent: mockedTransmit,
     }),

@@ -1,4 +1,4 @@
-import { useTSAccountProtection } from '@transmit-security/riskid-reactjs-ts';
+import { useTSAccountProtection } from '@transmitsecurity/riskid-reactjs-ts';
 
 function InnerComponent() {
   const { triggerActionEvent, setAuthenticatedUser, clearUser } = useTSAccountProtection();
