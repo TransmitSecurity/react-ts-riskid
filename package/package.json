@@ -1,6 +1,6 @@
 {
     "name": "@transmitsecurity/riskid-reactjs-ts",
-    "version": "1.0.12",
+    "version": "1.0.13",
     "license": "SEE LICENSE IN LICENSE",
     "module": "./dist/index.es.js",
     "main": "./dist/index.es.js",
