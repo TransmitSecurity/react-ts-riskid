@@ -11,8 +11,8 @@
     "homepage": "https://github.com/TransmitSecurity/react-ts-riskid/blob/main/package/README.md",
     "exports": {
         ".": {
-            "import": "./dist/index.es.js",
-            "require": "./dist/index.es.js"
+            "require": "./dist/index.cjs.js",
+            "import": "./dist/index.es.js"
         }
     },
     "types": "./dist/TSAccountProtectionProvider.d.ts",

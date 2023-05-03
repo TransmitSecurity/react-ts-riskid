@@ -31,7 +31,7 @@ export default defineConfig(({ command }) => ({
     lib: {
       entry: './index.ts',
       name: '@transmitsecurity/riskid-reactjs-ts',
-      formats: ['es'],
+      formats: ['es', 'cjs'],
       fileName: format => {
         return `index.${format}.js`;
       }
