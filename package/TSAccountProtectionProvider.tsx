@@ -19,6 +19,7 @@ const SDK_CLEAR_USER_ERR = 'Error clearing user';
 
 type ProviderState = DRSConfigOptions & {
   initialized: Promise<boolean>;
+  clientId: string;
 };
 
 type ErrHandler = (err: any) => void;
@@ -27,11 +28,6 @@ type ErrHandler = (err: any) => void;
  * Configuration object for the Transmit Security Detection and Response SDK
  */
  export interface DRSConfigOptions {
-  /**
-   * Your Transmit-Security Application client identifier
-   */
-  clientId: string;
-
   /**
    * Alternative URL to load the SDK from for 1st-party integration
    * This option overrides the {@link DRSConfigOptions#sdkVersion} option
