@@ -23,12 +23,43 @@ type ProviderState = DRSConfigOptions & {
 
 type ErrHandler = (err: any) => void;
 
-export type DRSConfigOptions = {
+/**
+ * Configuration object for the Transmit Security Detection and Response SDK
+ */
+ export interface DRSConfigOptions {
+  /**
+   * Your Transmit-Security Application client identifier
+   */
   clientId: string;
-  userId?: string;
-  sdkVersion?: string;
+
+  /**
+   * Alternative URL to load the SDK from for 1st-party integration
+   * This option overrides the {@link DRSConfigOptions#sdkVersion} option
+   */
   sdkLoadUrl?: string;
-  serverPath?: string;
+
+  /**
+   * Version of the DRS SDK to load (this setting is ignored if {@link DRSConfigOptions#sdkLoadUrl} is set)
+   * Default: latest
+   */
+  sdkVersion?: string;
+
+  /**
+   * A base URL to use for submission of device telemetry and actions, used for 1st-party integration
+   * Default: https://collect.riskid.security
+   */
+  serverUrl?: string;
+
+  /**
+   * Opaque identifier of the user in your system
+   * To be provided if the SDK is loaded in a context of an already authenticated user
+   */
+  userId?: string;
+
+  /**
+   * a callback to be called in case of unexpected errors originating from the library
+   * @param error the exception object caught be the library
+   */
   onError?: ErrHandler;
 }
 
@@ -110,7 +141,7 @@ const buildProviderState = (clientId: string, options?: DRSConfigOptions): Provi
   return {
     initialized: new Promise((res) => undefined), // making default promise in pending state
     clientId,
-    serverPath: options?.serverPath ?? 'https://collect.riskid.security/',
+    serverUrl: options?.serverUrl ?? 'https://collect.riskid.security/',
     sdkVersion,
     sdkLoadUrl: options?.sdkLoadUrl ?? generateSdkUrl(sdkVersion),
     ...(options?.userId && { userId: options.userId }),
@@ -174,7 +205,7 @@ export function TSAccountProtectionProvider({
       const initializedPromise = makeQuerablePromise(providerState.initialized);
       if (initializedPromise.status != PromiseStatus.Fulfilled && !window.myTSAccountProtection) {
         try {
-          const serverPath = providerState.serverPath;
+          const serverPath = providerState.serverUrl;
           console.log(
             `Initializes AccountProtection SDK with { clientId: ${providerState.clientId}, serverUrl: ${serverPath} }`,
           );
