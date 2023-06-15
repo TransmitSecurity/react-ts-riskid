@@ -17,14 +17,20 @@ const SDK_TRIGGER_ACTION_ERR = 'Error sending action event';
 const SDK_AUTHENTICATE_USER_ERR = 'Error authenticating user';
 const SDK_CLEAR_USER_ERR = 'Error clearing user';
 
-type ProviderState = {
+type ProviderState = DRSConfigOptions & {
   initialized: Promise<boolean>;
+};
+
+type ErrHandler = (err: any) => void;
+
+export type DRSConfigOptions = {
   clientId: string;
   userId?: string;
-  sdkVersion: string;
-  serverUrl: string;
-  onError: (err: any) => void;
-};
+  sdkVersion?: string;
+  sdkLoadUrl?: string;
+  serverPath?: string;
+  onError?: ErrHandler;
+}
 
 interface QuerablePromise extends Promise<any> {
   status: PromiseStatus;
@@ -77,7 +83,7 @@ const generateSdkUrl = (sdkVersion: string) => {
   return `https://cdn.riskid.security/sdk/web_sdk_${sdkVersion}.js`;
 };
 
-const getLoadSDKPromise = (id: string, sdkVersion: string, parentElement?: HTMLHeadElement): Promise<void> => {
+const getLoadSDKPromise = (id: string, sdkLoadUrl: string, parentElement?: HTMLHeadElement): Promise<void> => {
   if (typeof document === 'undefined' || document.getElementById(id)) {
     // document is exist if platform is a browser
     throw new Error('SDK already loaded or cannot be loaded');
@@ -85,10 +91,8 @@ const getLoadSDKPromise = (id: string, sdkVersion: string, parentElement?: HTMLH
   return new Promise((resolve, reject) => {
     const scriptTag = document.createElement('script');
 
-    const sdkSrcUrl = generateSdkUrl(sdkVersion);
-
     scriptTag.defer = true;
-    scriptTag.src = sdkSrcUrl;
+    scriptTag.src = sdkLoadUrl;
     scriptTag.id = id;
     scriptTag.onload = () => resolve();
     scriptTag.onerror = () => reject();
@@ -101,12 +105,14 @@ const getLoadSDKPromise = (id: string, sdkVersion: string, parentElement?: HTMLH
   });
 };
 
-const buildProviderState = (clientId: string, options?: { [key: string]: any }): ProviderState => {
+const buildProviderState = (clientId: string, options?: DRSConfigOptions): ProviderState => {
+  const sdkVersion = options?.sdkVersion ?? 'latest';
   return {
-    initialized: false,
+    initialized: new Promise((res) => undefined), // making default promise in pending state
     clientId,
-    serverUrl: options?.serverPath ?? 'https://collect.riskid.security/',
-    sdkVersion: options?.sdkVersion ?? 'latest',
+    serverPath: options?.serverPath ?? 'https://collect.riskid.security/',
+    sdkVersion,
+    sdkLoadUrl: options?.sdkLoadUrl ?? generateSdkUrl(sdkVersion),
     ...(options?.userId && { userId: options.userId }),
     onError:
       options?.onError && typeof options.onError == 'function'
@@ -137,7 +143,7 @@ export function TSAccountProtectionProvider({
 }: {
   children: React.ReactNode;
   clientId: string;
-  options?: { [key: string]: any };
+  options?: DRSConfigOptions;
 }) {
   if (!clientId) {
     throw new Error('No clientId was provided');
@@ -159,15 +165,16 @@ export function TSAccountProtectionProvider({
   useEffect(() => {
     let loadSDKPromise;
     try {
-      loadSDKPromise = getLoadSDKPromise(RISKID_SDK_SCRIPT, providerState.sdkVersion);
+      loadSDKPromise = getLoadSDKPromise(RISKID_SDK_SCRIPT, providerState.sdkLoadUrl as string);
     } catch(error) {
       return;
     }
+    const onError = providerState.onError as ErrHandler;
     loadSDKPromise.then(async () => {
       const initializedPromise = makeQuerablePromise(providerState.initialized);
       if (initializedPromise.status != PromiseStatus.Fulfilled && !window.myTSAccountProtection) {
         try {
-          const serverPath = providerState.serverUrl;
+          const serverPath = providerState.serverPath;
           console.log(
             `Initializes AccountProtection SDK with { clientId: ${providerState.clientId}, serverUrl: ${serverPath} }`,
           );
@@ -176,16 +183,16 @@ export function TSAccountProtectionProvider({
             await window.myTSAccountProtection.init(providerState?.userId);
             sdkInitialized(true);
           } catch (err) {
-            providerState.onError(buildSdkError(err, SDK_INIT_ERR));
+            onError(buildSdkError(err, SDK_INIT_ERR));
             sdkInitialized(false);
           }
         } catch (err) {
-          providerState.onError(buildSdkError(err, SDK_LOAD_ERR));
+          onError(buildSdkError(err, SDK_LOAD_ERR));
           sdkInitialized(false);
         }
       }
     }).catch((err) => {
-      providerState.onError(buildSdkError(err, SDK_LOAD_ERR));
+      onError(buildSdkError(err, SDK_LOAD_ERR));
       sdkInitialized(false);
     });
   }, []);
@@ -199,7 +206,7 @@ function getTriggerActionEventFunc(providerState: ProviderState) {
       try {
         return await window.myTSAccountProtection?.triggerActionEvent(actionType, options);
       } catch (err) {
-        providerState.onError(buildSdkError(err, SDK_TRIGGER_ACTION_ERR));
+        (providerState.onError as ErrHandler)(buildSdkError(err, SDK_TRIGGER_ACTION_ERR));
       }
     }
     return null;
@@ -216,7 +223,7 @@ function getAuthenticatedUserFunc(providerState: ProviderState, providerDispatch
         });
         return await window.myTSAccountProtection?.setAuthenticatedUser(userId, options);
       } catch (err) {
-        providerState.onError(buildSdkError(err, SDK_AUTHENTICATE_USER_ERR));
+        (providerState.onError as ErrHandler)(buildSdkError(err, SDK_AUTHENTICATE_USER_ERR));
       }
     }
     return false;
@@ -233,7 +240,7 @@ function getClearUserFunc(providerState: ProviderState, providerDispatch: Functi
         });
         return await window.myTSAccountProtection?.clearUser(options);
       } catch (err) {
-        providerState.onError(buildSdkError(err, SDK_CLEAR_USER_ERR));
+        (providerState.onError as ErrHandler)(buildSdkError(err, SDK_CLEAR_USER_ERR));
       }
     }
     return false;
