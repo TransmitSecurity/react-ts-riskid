@@ -1,4 +1,4 @@
-import React, { createContext, Dispatch, useContext, useReducer, useMemo, useEffect } from 'react';
+import { createContext, Dispatch, useContext, useReducer, useMemo, useEffect, ReactNode } from 'react';
 
 declare let TSAccountProtection: any;
 declare global {
@@ -168,7 +168,7 @@ export function TSAccountProtectionProvider({
   clientId,
   options,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   clientId: string;
   options?: DRSConfigOptions;
 }) {
