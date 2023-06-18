@@ -44,7 +44,7 @@ type ErrHandler = (err: any) => void;
    * @deprecate
    * Please use `serverUrl` instead
    */
-   serverPath?: string;
+  serverPath?: string;
 
   /**
    * A base URL to use for submission of device telemetry and actions, used for 1st-party integration
@@ -143,7 +143,7 @@ const buildProviderState = (clientId: string, options?: DRSConfigOptions): Provi
   return {
     initialized: new Promise((res) => undefined), // making default promise in pending state
     clientId,
-    serverUrl: options?.serverUrl ?? 'https://collect.riskid.security/',
+    serverUrl: options?.serverUrl ?? (options?.serverPath || 'https://collect.riskid.security/'),
     sdkVersion,
     sdkLoadUrl: options?.sdkLoadUrl ?? generateSdkUrl(sdkVersion),
     ...(options?.userId && { userId: options.userId }),
