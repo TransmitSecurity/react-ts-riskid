@@ -1,10 +1,10 @@
 import logo from './logo.svg';
-import { TSAccountProtectionProvider } from '@transmitsecurity/riskid-reactjs-ts';
+import { TSAccountProtectionProvider, DRSConfigOptions } from '@transmitsecurity/riskid-reactjs-ts';
 import InnerComponent from './InnerComponent';
 import './App.css';
 
 function App() {
-  const accountProtectionOptions = {
+  const accountProtectionOptions: DRSConfigOptions = {
     userId: 'demo-user-id',
   };
 

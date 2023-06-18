@@ -1902,9 +1902,9 @@
   integrity sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==
 
 "@transmitsecurity/riskid-reactjs-ts@*":
-  version "1.0.15"
-  resolved "https://registry.yarnpkg.com/@transmitsecurity/riskid-reactjs-ts/-/riskid-reactjs-ts-1.0.15.tgz#c8582e0f9ea5d5ba977fdeb283d478297d1864a3"
-  integrity sha512-nrqzJzoLvd0hPp7lxcavY3o9MvhW1Fisy8dIPDcF2/Dxpm519E1HPCX2FTTeB9wNsCgcXxo0m2Z86sEXGz9afQ==
+  version "1.0.16"
+  resolved "https://registry.yarnpkg.com/@transmitsecurity/riskid-reactjs-ts/-/riskid-reactjs-ts-1.0.16.tgz#c56b6d4f7a877320f83b0da75541c585999f1b2f"
+  integrity sha512-My/UxYvVRdxKstkh4tnXKhE+spVm+VAkC7io2mIQhBTulFDpEHA8qPDi1XUrkJWcGaU6VtVc9OyXxkLMRcnSEQ==
 
 "@trysound/sax@0.2.0":
   version "0.2.0"
@@ -3122,9 +3122,9 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001464, caniuse-lite@^1.0.30001503:
-  version "1.0.30001503"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001503.tgz#88b6ff1b2cf735f1f3361dc1a15b59f0561aa398"
-  integrity sha512-Sf9NiF+wZxPfzv8Z3iS0rXM1Do+iOy2Lxvib38glFX+08TCYYYGR5fRJXk4d77C4AYwhUjgYgMsMudbh2TqCKw==
+  version "1.0.30001504"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001504.tgz#eaf77e5c852dfa5f82c4924468c30602ac53744a"
+  integrity sha512-5uo7eoOp2mKbWyfMXnGO9rJWOGU8duvzEiYITW+wivukL7yHH4gX9yuRaobu6El4jPxo6jKZfG+N6fB621GD/Q==
 
 case-sensitive-paths-webpack-plugin@^2.4.0:
   version "2.4.0"
