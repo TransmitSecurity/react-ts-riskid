@@ -1,7 +1,7 @@
 # Changelog
 
 ## Version 1.1.0
-1. Change `serverPath` optional param to `serverUrl` (breaking change)
+1. **Breaking change:** Renamed `serverPath` optional param to `serverUrl`
 2. Export new `DRSConfigOptions` interface for the Provider component.
 3. Add new optional param - `sdkLoadUrl` - an alternative URL to load the SDK from for 1st-party integration (*This option overrides the `DRSConfigOptions/sdkVersion` option).
 
