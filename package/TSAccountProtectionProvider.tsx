@@ -41,6 +41,12 @@ type ErrHandler = (err: any) => void;
   sdkVersion?: string;
 
   /**
+   * @deprecate
+   * Please use `serverUrl` instead
+   */
+   serverPath?: string;
+
+  /**
    * A base URL to use for submission of device telemetry and actions, used for 1st-party integration
    * Default: https://collect.riskid.security
    */
