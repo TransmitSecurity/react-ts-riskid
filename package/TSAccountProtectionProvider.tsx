@@ -48,7 +48,7 @@ type ErrHandler = (err: any) => void;
 
   /**
    * A base URL to use for submission of device telemetry and actions, used for 1st-party integration
-   * Default: https://collect.riskid.security
+   * Default: https://api.transmitsecurity.io/risk-collect
    */
   serverUrl?: string;
 
@@ -143,7 +143,7 @@ const buildProviderState = (clientId: string, options?: DRSConfigOptions): Provi
   return {
     initialized: new Promise((res) => undefined), // making default promise in pending state
     clientId,
-    serverUrl: options?.serverUrl ?? (options?.serverPath || 'https://collect.riskid.security/'),
+    serverUrl: options?.serverUrl ?? (options?.serverPath || 'https://api.transmitsecurity.io/risk-collect/'),
     sdkVersion,
     sdkLoadUrl: options?.sdkLoadUrl ?? generateSdkUrl(sdkVersion),
     ...(options?.userId && { userId: options.userId }),
