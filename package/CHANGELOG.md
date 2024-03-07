@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 1.0.18
+1. Update default SDK's `serverUrl` to the gateway URL (`'https://api.transmitsecurity.io/risk-collect/'`)
+
 ## Version 1.0.17
 1. Renamed `serverPath` optional param to `serverUrl`, mark `serverPath` as deprecated.
 2. Export new `DRSConfigOptions` interface for the Provider component.
