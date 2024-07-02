@@ -1,13 +1,13 @@
 {
     "name": "@transmitsecurity/riskid-reactjs-ts",
-    "version": "1.0.18",
+    "version": "1.1.0",
     "license": "SEE LICENSE IN LICENSE",
     "module": "./dist/index.es.js",
     "main": "./dist/index.cjs.js",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/TransmitSecurity/react-ts-riskid.git"
-      },
+    },
     "homepage": "https://github.com/TransmitSecurity/react-ts-riskid/blob/main/package/README.md",
     "exports": {
         ".": {
@@ -60,7 +60,8 @@
         "vite-plugin-environment": "1.1.0",
         "vite-plugin-rewrite-all": "0.1.2",
         "vite-plugin-style-import": "1.4.1",
-        "vite-plugin-svgr": "1.0.1"
+        "vite-plugin-svgr": "1.0.1",
+        "vite-tsconfig-paths": "4.3.2"
     },
     "peerDependencies": {
         "react": ">=16.0.0",
