@@ -29,10 +29,6 @@ jobs:
       - name: Prepare Yarn 3.4.1
         run: corepack prepare yarn@3.4.1 --activate
 
-      - name: Install project dependencies
-        run: |
-          yarn install --frozen-lockfile
-
       - name: Install package dependencies
         run: |
           cd package
@@ -41,7 +37,7 @@ jobs:
       - name: Audit
         run: |
           cd package
-          yarn run ci-audit
+          npx improved-yarn-audit --min-severity=low --debug --ignore-dev-deps
       - name: Lint
         run: |
           cd package
