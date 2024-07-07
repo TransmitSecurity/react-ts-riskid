@@ -37,7 +37,7 @@ jobs:
       - name: Audit
         run: |
           cd package
-          yarn ci-audit
+          npx improved-yarn-audit
       - name: Lint
         run: |
           cd package
