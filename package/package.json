@@ -28,7 +28,7 @@
         "prepack": "yarn build",
         "lint": "echo 'TODO lint'",
         "test": "echo 'TODO test'",
-        "ci-audit": "improved-yarn-audit --min-severity=low --debug --ignore-dev-deps",
+        "ci-audit": "npx improved-yarn-audit --min-severity=low --debug --ignore-dev-deps",
         "dev-audit": "improved-yarn-audit --min-severity=low --debug ",
         "ci-version": "echo $npm_package_version"
     },
