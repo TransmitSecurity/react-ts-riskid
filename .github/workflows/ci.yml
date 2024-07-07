@@ -29,7 +29,11 @@ jobs:
       - name: Prepare Yarn 3.4.1
         run: corepack prepare yarn@3.4.1 --activate
 
-      - name: Install dependencies
+      - name: Install project dependencies
+        run: |
+          yarn install --frozen-lockfile
+
+      - name: Install package dependencies
         run: |
           cd package
           yarn install --frozen-lockfile
