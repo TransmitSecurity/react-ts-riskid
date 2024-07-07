@@ -23,8 +23,11 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: Install yarn
-        run: npm install --global yarn
+      - name: Enable Corepack
+      run: corepack enable
+
+      - name: Prepare Yarn 3.4.1
+      run: corepack prepare yarn@3.4.1 --activate
 
       - name: Install dependencies
         run: |
