@@ -40,7 +40,6 @@ jobs:
 
       - name: Audit
         run: |
-          yarn global add improved-yarn-audit
           cd package
           yarn run ci-audit
       - name: Lint
