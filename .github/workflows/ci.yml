@@ -56,7 +56,12 @@ jobs:
       - name: Pack
         run: |
           cd package/dist
-          yarn pack
+          PACKAGE_VERSION=$(cat package.json \
+          | grep version \
+          | head -1 \
+          | awk -F: '{ print $2 }' \
+          | sed 's/[ ",]//g')
+          yarn pack --filename ../transmitsecurity-riskid-reactjs-ts-v$PACKAGE_VERSION.tgz
           cd ..
       - name: Archive NPM package
         uses: actions/upload-artifact@v3
