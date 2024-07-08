@@ -28,8 +28,6 @@
         "prepack": "yarn build",
         "lint": "echo 'TODO lint'",
         "test": "echo 'TODO test'",
-        "ci-audit": "npx improved-yarn-audit --min-severity=low --debug --ignore-dev-deps",
-        "dev-audit": "improved-yarn-audit --min-severity=low --debug ",
         "ci-version": "echo $npm_package_version"
     },
     "browserslist": {
@@ -49,7 +47,6 @@
         "@types/react": "18.0.27",
         "@vitejs/plugin-react": "1.1.4",
         "better-npm-audit": "3.7.3",
-        "improved-yarn-audit": "3.0.0",
         "less": "4.1.2",
         "prettier": "2.3.2",
         "react": "17.0.2",
