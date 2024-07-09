@@ -83,7 +83,7 @@ jobs:
         run: corepack prepare yarn@3.4.1 --activate
 
       - name: Publish to GitHub packages
-        run: yarn publish --access public
+        run: npm publish
         working-directory: ./package
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
