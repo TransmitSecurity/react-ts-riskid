@@ -1,7 +1,7 @@
 name: Release Artifact
 
 env:
-  NODE_VERSION: 16.14
+  NODE_VERSION: 18.0.0
   RUNID_VERSION_SUFFIX: ${{ github.run_id }}.${{ github.run_attempt }}
 
 on:
@@ -26,13 +26,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Install yarn
-        run: npm install --global yarn
+      - name: Enable Corepack
+        run: corepack enable
 
-      - name: Install dependencies
+      - name: Prepare Yarn 3.4.1
+        run: corepack prepare yarn@3.4.1 --activate
+
+      - name: Install package dependencies
         run: |
           cd package
-          yarn
+          yarn install --frozen-lockfile
 
       - name: Build
         run: |
