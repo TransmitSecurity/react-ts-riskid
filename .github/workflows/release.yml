@@ -75,6 +75,12 @@ jobs:
         with:
           path: ${{ github.workspace }}
           key: ${{ runner.os }}-${{ env.RUNID_VERSION_SUFFIX }}
+        
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Prepare Yarn 3.4.1
+        run: corepack prepare yarn@3.4.1 --activate
 
       - name: Publish to GitHub packages
         run: yarn publish --access=public
@@ -109,6 +115,12 @@ jobs:
         with:
           path: ${{ github.workspace }}
           key: ${{ runner.os }}-${{ env.RUNID_VERSION_SUFFIX }}
+        
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Prepare Yarn 3.4.1
+        run: corepack prepare yarn@3.4.1 --activate
 
       - name: Publish to npmjs
         run: npm publish --access=public
