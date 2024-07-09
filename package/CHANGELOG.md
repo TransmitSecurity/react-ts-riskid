@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 1.1.0
+1. Update default SDK's `serverUrl` to the gateway URL (`'https://api.transmitsecurity.io/risk-collect/'`)
+2. export DRSConfigOptions
+3. Add optional `initSuccessLog` prop for TSAccountProtectionProvider component.
+
 ## Version 1.0.17
 1. Renamed `serverPath` optional param to `serverUrl`, mark `serverPath` as deprecated.
 2. Export new `DRSConfigOptions` interface for the Provider component.

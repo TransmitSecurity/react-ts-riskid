@@ -47,3 +47,5 @@ Thumbs.db
 
 .rt_creds
 .npmrc
+
+**/.yarn

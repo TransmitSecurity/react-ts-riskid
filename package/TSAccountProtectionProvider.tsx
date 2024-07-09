@@ -48,7 +48,7 @@ type ErrHandler = (err: any) => void;
 
   /**
    * A base URL to use for submission of device telemetry and actions, used for 1st-party integration
-   * Default: https://collect.riskid.security
+   * Default: https://api.transmitsecurity.io/risk-collect
    */
   serverUrl?: string;
 
@@ -63,6 +63,11 @@ type ErrHandler = (err: any) => void;
    * @param error the exception object caught be the library
    */
   onError?: ErrHandler;
+
+  /**
+   * A string to log when the sdk initialization completes. If not provided - logging will be skipped.
+   */
+  initSuccessLog?: string;
 }
 
 interface QuerablePromise extends Promise<any> {
@@ -143,10 +148,11 @@ const buildProviderState = (clientId: string, options?: DRSConfigOptions): Provi
   return {
     initialized: new Promise((res) => undefined), // making default promise in pending state
     clientId,
-    serverUrl: options?.serverUrl ?? (options?.serverPath || 'https://collect.riskid.security/'),
+    serverUrl: options?.serverUrl ?? (options?.serverPath || 'https://api.transmitsecurity.io/risk-collect/'),
     sdkVersion,
     sdkLoadUrl: options?.sdkLoadUrl ?? generateSdkUrl(sdkVersion),
     ...(options?.userId && { userId: options.userId }),
+    initSuccessLog: options?.initSuccessLog,
     onError:
       options?.onError && typeof options.onError == 'function'
         ? options?.onError
@@ -208,12 +214,12 @@ export function TSAccountProtectionProvider({
       if (initializedPromise.status != PromiseStatus.Fulfilled && !window.myTSAccountProtection) {
         try {
           const serverPath = providerState.serverUrl;
-          console.log(
-            `Initializes AccountProtection SDK with { clientId: ${providerState.clientId}, serverUrl: ${serverPath} }`,
-          );
           window.myTSAccountProtection = new TSAccountProtection(providerState.clientId, { serverPath });
           try {
             await window.myTSAccountProtection.init(providerState?.userId);
+            if (providerState.initSuccessLog) {
+              console.log(providerState.initSuccessLog);
+            }
             sdkInitialized(true);
           } catch (err) {
             onError(buildSdkError(err, SDK_INIT_ERR));

@@ -6,6 +6,7 @@ import './App.css';
 function App() {
   const accountProtectionOptions: DRSConfigOptions = {
     userId: 'demo-user-id',
+    initSuccessLog: 'Detection and Response SDK successfully initialized',
   };
 
   return (

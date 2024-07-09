@@ -1,28 +1,21 @@
 {
   "compilerOptions": {
-    "incremental": true,
-    "jsx": "react",
+    "outDir": "./dist",
     "module": "ESNext",
-
+    "target": "ESNext",
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
     "declaration": true,
     "declarationMap": true,
     "declarationDir": "./dist/types",
-    "outDir": "./dist",
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
-
+    "jsx": "react-jsx",
     "paths": {
       "@transmitsecurity/riskid-reactjs-ts": [
         "./package",
       ]
     },
-
     /* Type Checking */
     "strict": true,
-
-    /* Completeness */
-    // "skipDefaultLibCheck": true,
-    "skipLibCheck": true
-  }
+  },
 }

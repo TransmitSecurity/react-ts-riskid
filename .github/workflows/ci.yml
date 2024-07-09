@@ -1,7 +1,7 @@
 name: CI
 
 env:
-  NODE_VERSION: 16.14
+  NODE_VERSION: 18.0.0
   RUNID_VERSION_SUFFIX: ${{ github.run_id }}.${{ github.run_attempt }}
 
 on:
@@ -23,19 +23,21 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: Install yarn
-        run: npm install --global yarn
+      - name: Enable Corepack
+        run: corepack enable
 
-      - name: Install dependencies
+      - name: Prepare Yarn 3.4.1
+        run: corepack prepare yarn@3.4.1 --activate
+
+      - name: Install package dependencies
         run: |
           cd package
-          yarn
+          yarn install --frozen-lockfile
 
       - name: Audit
         run: |
-          yarn global add improved-yarn-audit
           cd package
-          yarn run ci-audit
+          yarn npm audit
       - name: Lint
         run: |
           cd package
@@ -54,7 +56,8 @@ jobs:
       - name: Pack
         run: |
           cd package/dist
-          yarn pack
+          PACKAGE_VERSION=$(yarn ci-version)
+          yarn pack --filename ../transmitsecurity-riskid-reactjs-ts-v$PACKAGE_VERSION.tgz
           cd ..
       - name: Archive NPM package
         uses: actions/upload-artifact@v3
