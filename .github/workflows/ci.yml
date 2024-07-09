@@ -56,11 +56,7 @@ jobs:
       - name: Pack
         run: |
           cd package/dist
-          PACKAGE_VERSION=$(cat package.json \
-          | grep version \
-          | head -1 \
-          | awk -F: '{ print $2 }' \
-          | sed 's/[ ",]//g')
+          PACKAGE_VERSION=$(yarn ci-version)
           yarn pack --filename ../transmitsecurity-riskid-reactjs-ts-v$PACKAGE_VERSION.tgz
           cd ..
       - name: Archive NPM package
