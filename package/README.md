@@ -1,6 +1,6 @@
 # React Web-SDK quick start
 
-This guide describes how to quickly integrate Detection and Response services into your web application. This React library is a wrapper of the Transmit [Detection and Response JavaScript SDK](https://developer.transmitsecurity.com/guides/risk/quick_start_web/). The guide covers the client-side integration as well as the backend API integration required to complete the flow.
+This guide describes how to quickly integrate Detection and Response services into your web application. This React library is a wrapper of the Transmit [Detection and Response JavaScript SDK](https://developer.transmitsecurity.com/guides/risk/quick_start_react/). The guide covers the client-side integration as well as the backend API integration required to complete the flow.
 
 ## Step 1: Get client credentials
 
