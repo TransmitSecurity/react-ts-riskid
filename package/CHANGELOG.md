@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 1.1.1
+1. Update react quickstart documentation link in package README
+
 ## Version 1.1.0
 1. Update default SDK's `serverUrl` to the gateway URL (`'https://api.transmitsecurity.io/risk-collect/'`)
 2. export DRSConfigOptions
