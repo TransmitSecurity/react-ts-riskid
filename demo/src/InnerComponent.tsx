@@ -1,7 +1,7 @@
 import { useTSAccountProtection } from '@transmitsecurity/riskid-reactjs-ts';
 
 function InnerComponent() {
-  const { triggerActionEvent, setAuthenticatedUser, clearUser } = useTSAccountProtection();
+  const { triggerActionEvent, setAuthenticatedUser, clearUser, getSessionToken } = useTSAccountProtection();
 
   return (
     <>
@@ -21,6 +21,10 @@ function InnerComponent() {
         style={{width: '100px', height: '100px' }}
         onClick={() => clearUser()}
       >Reset</button>
+      <button
+        style={{width: '100px', height: '100px' }}
+        onClick={() => getSessionToken()}
+      >Get Session Token</button>
     </>
   );
 };

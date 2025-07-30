@@ -16,6 +16,7 @@ const SDK_LOAD_ERR = 'SDK load error';
 const SDK_TRIGGER_ACTION_ERR = 'Error sending action event';
 const SDK_AUTHENTICATE_USER_ERR = 'Error authenticating user';
 const SDK_CLEAR_USER_ERR = 'Error clearing user';
+const SDK_GET_SESSION_TOKEN_ERR = 'Error getting session token';
 
 type ProviderState = DRSConfigOptions & {
   initialized: Promise<boolean>;
@@ -67,7 +68,13 @@ type ErrHandler = (err: any) => void;
   /**
    * A string to log when the sdk initialization completes. If not provided - logging will be skipped.
    */
-  initSuccessLog?: string;
+   initSuccessLog?: string;
+
+  /**
+   * Setting that determines if session token is enabled
+   * Default: false
+   */
+   enableSessionToken?: boolean;
 }
 
 interface QuerablePromise extends Promise<any> {
@@ -148,6 +155,7 @@ const buildProviderState = (clientId: string, options?: DRSConfigOptions): Provi
   return {
     initialized: new Promise((res) => undefined), // making default promise in pending state
     clientId,
+    enableSessionToken: options?.enableSessionToken ?? false,
     serverUrl: options?.serverUrl ?? (options?.serverPath || 'https://api.transmitsecurity.io/risk-collect/'),
     sdkVersion,
     sdkLoadUrl: options?.sdkLoadUrl ?? generateSdkUrl(sdkVersion),
@@ -213,8 +221,8 @@ export function TSAccountProtectionProvider({
       const initializedPromise = makeQuerablePromise(providerState.initialized);
       if (initializedPromise.status != PromiseStatus.Fulfilled && !window.myTSAccountProtection) {
         try {
-          const serverPath = providerState.serverUrl;
-          window.myTSAccountProtection = new TSAccountProtection(providerState.clientId, { serverPath });
+          const { serverUrl: serverPath, enableSessionToken } = providerState;
+          window.myTSAccountProtection = new TSAccountProtection(providerState.clientId, { serverPath, enableSessionToken});
           try {
             await window.myTSAccountProtection.init(providerState?.userId);
             if (providerState.initSuccessLog) {
@@ -286,6 +294,19 @@ function getClearUserFunc(providerState: ProviderState, providerDispatch: Functi
   }
 }
 
+function getSessionTokenFunc(providerState: ProviderState) {
+  return async function getSessionToken(): Promise<string | null> {
+    if (await providerState.initialized) {
+      try {
+        return await window.myTSAccountProtection?.getSessionToken();
+      } catch (err) {
+        (providerState.onError as ErrHandler)(buildSdkError(err, SDK_GET_SESSION_TOKEN_ERR));
+      }
+    }
+    return null;
+  }
+}
+
 const useAccountProtectionContext = () => {
   const context = useContext(AccountProtectionContext);
   if (context === undefined) {
@@ -302,5 +323,6 @@ export const useTSAccountProtection = () => {
     triggerActionEvent: getTriggerActionEventFunc(state),
     setAuthenticatedUser: getAuthenticatedUserFunc(state, dispatch),
     clearUser: getClearUserFunc(state, dispatch),
+    getSessionToken: getSessionTokenFunc(state),
   };
 };
