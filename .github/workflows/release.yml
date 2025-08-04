@@ -1,7 +1,7 @@
 name: Release Artifact
 
 env:
-  NODE_VERSION: 18.0.0
+  NODE_VERSION: 22.14
   RUNID_VERSION_SUFFIX: ${{ github.run_id }}.${{ github.run_attempt }}
 
 on:
