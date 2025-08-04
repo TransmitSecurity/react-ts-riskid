@@ -1,5 +1,9 @@
 # Changelog
 
+
+## Version 1.2.0
+1. Expose `getSessionToken()` method on SDK.
+
 ## Version 1.1.1
 1. Update react quickstart documentation link in package README
 

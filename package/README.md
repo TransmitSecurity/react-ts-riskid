@@ -37,19 +37,21 @@ import { TSAccountProtectionProvider } from '@transmitsecurity/riskid-reactjs-ts
 
 ## Step 4: Use the React library
 
-The example below demonstrates triggering a login event from a login button, setting and clearing a user.
+The example below demonstrates triggering a login event from a login button, setting and clearing a user and obtaining a session token.
 
 - `triggerActionEvent()` receives an action type and returns a response that includes the `actionToken`. To obtain risk recommendations for sensitive actions, your application should report these actions. To do this, add the code below to relevant user interactions (such as the Login button `click` event handler). The library allows reporting on events with the following action types: `login`, `register`, `transaction`, `password_reset`, `logout`, `checkout`, `account_details_change`, `account_auth_change`, `withdraw` or `credits_change`.
 
 - `setAuthenticatedUser()` sets the user context for all subsequent events in the browser session (or until the user is explicitly cleared). It should be set only after you've fully authenticated the user (including, for example, any 2FA that was required). Receives an opaque identifier of the user in your system ([USER_ID] in the snippet), which shouldn't contain any personal info.
 
 - `clearUser()` clears the user context for all subsequent events in the browser session.
+  
+- `getSessionToken()` retrieves the current device session token as a string, that can be used to trigger action events via backend API.
 
 ```js
 import { useTSAccountProtection } from '@transmitsecurity/riskid-reactjs-ts';
 
 function InnerComponent() {
-  const { triggerActionEvent, setAuthenticatedUser, clearUser } = useTSAccountProtection();
+  const { triggerActionEvent, setAuthenticatedUser, clearUser, getSessionToken } = useTSAccountProtection();
 
   return (
     <>
@@ -69,6 +71,10 @@ function InnerComponent() {
       style={{width: '100px', height: '100px' }}
       onClick={() => clearUser()}
     >Reset</button>
+    <button
+        style={{width: '100px', height: '100px' }}
+        onClick={() => getSessionToken()}
+      >Get Session Token</button>
       </>
   );
 };
