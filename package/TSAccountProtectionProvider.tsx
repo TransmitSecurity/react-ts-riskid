@@ -68,13 +68,13 @@ type ErrHandler = (err: any) => void;
   /**
    * A string to log when the sdk initialization completes. If not provided - logging will be skipped.
    */
-   initSuccessLog?: string;
+  initSuccessLog?: string;
 
   /**
    * Setting that determines if session token is enabled
    * Default: false
    */
-   enableSessionToken?: boolean;
+  enableSessionToken?: boolean;
 }
 
 interface QuerablePromise extends Promise<any> {
