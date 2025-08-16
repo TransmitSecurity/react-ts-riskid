@@ -23,7 +23,7 @@ function InnerComponent() {
       >Reset</button>
       <button
         style={{width: '100px', height: '100px' }}
-        onClick={() => getSessionToken()}
+        onClick={getSessionToken}
       >Get Session Token</button>
     </>
   );
