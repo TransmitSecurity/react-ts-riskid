@@ -2643,13 +2643,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@transmitsecurity/riskid-reactjs-ts@file:../package/::locator=demo%40workspace%3A.":
-  version: 2.0.0
-  resolution: "@transmitsecurity/riskid-reactjs-ts@file:../package/#../package/::hash=34dcf7&locator=demo%40workspace%3A."
+"@transmitsecurity/riskid-reactjs-ts@npm:*":
+  version: 1.1.1
+  resolution: "@transmitsecurity/riskid-reactjs-ts@npm:1.1.1"
   peerDependencies:
-    react: ">=18.0.0"
-    react-dom: ">=18.0.0"
-  checksum: fe52676d460f9de3fd8762cc799559b7ac9c352b103795538b6a570303281b2d2924250eeeade6a5fea51e90f1e986081d1a34c0bcdd27971b353b6be89e31bb
+    react: ">=16.0.0"
+    react-dom: ">=16.0.0"
+  checksum: b0e16099db54f69db983fb52fca1756be447bb1e39f90efa0b3aee2ed626d0e96c23219d3790da27853382cb8f28cf1003f4b3f6d3d2c612f71875a2e684b087
   languageName: node
   linkType: hard
 
@@ -5314,7 +5314,7 @@ __metadata:
     "@testing-library/jest-dom": ^5.16.5
     "@testing-library/react": ^13.4.0
     "@testing-library/user-event": ^13.2.1
-    "@transmitsecurity/riskid-reactjs-ts": "file:../package/"
+    "@transmitsecurity/riskid-reactjs-ts": "*"
     "@types/jest": ^27.0.1
     "@types/node": 18.11.19
     "@types/react": 18.2.0
