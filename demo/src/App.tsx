@@ -7,6 +7,7 @@ function App() {
   const accountProtectionOptions: DRSConfigOptions = {
     userId: 'demo-user-id',
     initSuccessLog: 'Detection and Response SDK successfully initialized',
+    enableSessionToken: true,
   };
 
   return (

@@ -1,14 +1,14 @@
 name: CI
 
 env:
-  NODE_VERSION: 18.0.0
+  NODE_VERSION: 22.14
   RUNID_VERSION_SUFFIX: ${{ github.run_id }}.${{ github.run_attempt }}
 
 on:
   workflow_dispatch:
   pull_request:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
@@ -60,7 +60,7 @@ jobs:
           yarn pack --filename ../transmitsecurity-riskid-reactjs-ts-v$PACKAGE_VERSION.tgz
           cd ..
       - name: Archive NPM package
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           if-no-files-found: error
           retention-days: 30
@@ -68,7 +68,7 @@ jobs:
           path: package/transmitsecurity-riskid-reactjs-ts-v*.tgz
       - name: Archive failure data
         if: ${{ failure() }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: failure-data
           path: |

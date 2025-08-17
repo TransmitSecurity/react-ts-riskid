@@ -1,7 +1,7 @@
 name: Release Artifact
 
 env:
-  NODE_VERSION: 18.0.0
+  NODE_VERSION: 22.14
   RUNID_VERSION_SUFFIX: ${{ github.run_id }}.${{ github.run_attempt }}
 
 on:
@@ -50,7 +50,7 @@ jobs:
 
       - name: Archive failure data
         if: ${{ failure() }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: failure-data
           path: |
@@ -67,7 +67,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
-          registry-url: 'https://npm.pkg.github.com'
+          registry-url: "https://npm.pkg.github.com"
           always-auth: true
 
       - name: Fetch cached workspace
@@ -75,7 +75,7 @@ jobs:
         with:
           path: ${{ github.workspace }}
           key: ${{ runner.os }}-${{ env.RUNID_VERSION_SUFFIX }}
-        
+
       - name: Enable Corepack
         run: corepack enable
 
@@ -90,7 +90,7 @@ jobs:
 
       - name: Archive failure data
         if: ${{ failure() }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: failure-data
           path: |
@@ -107,7 +107,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
-          registry-url: 'https://registry.npmjs.org'
+          registry-url: "https://registry.npmjs.org"
           always-auth: true
 
       - name: Fetch cached workspace
@@ -115,7 +115,7 @@ jobs:
         with:
           path: ${{ github.workspace }}
           key: ${{ runner.os }}-${{ env.RUNID_VERSION_SUFFIX }}
-        
+
       - name: Enable Corepack
         run: corepack enable
 
@@ -130,7 +130,7 @@ jobs:
 
       - name: Archive failure data
         if: ${{ failure() }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: failure-data
           path: |
