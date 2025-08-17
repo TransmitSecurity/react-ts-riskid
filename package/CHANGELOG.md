@@ -1,5 +1,12 @@
 # Changelog
 
+## Version 2.0.0
+**BREAKING CHANGES:**
+
+1. **🚨 BREAKING:** Upgrade to React 18
+   - The SDK now requires **React 18** and **ReactDOM 18** as peer dependencies.
+   - If you're using TypeScript, please ensure that `@types/react` and `@types/react-dom` match your installed React version (18.x).
+   - You may encounter type errors (e.g. `JSX.Element is not assignable to ReactNode`) if your project has multiple versions of `@types/react` installed.
 
 ## Version 1.2.0
 1. Expose `getSessionToken()` method from the SDK.
