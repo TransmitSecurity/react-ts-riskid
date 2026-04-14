@@ -32,13 +32,49 @@ jobs:
       - name: Prepare Yarn 3.4.1
         run: corepack prepare yarn@3.4.1 --activate
 
-      - name: Set min-release-age
-        run: echo "min-release-age=7d" >> .npmrc
-
       - name: Install package dependencies
         run: |
           cd package
           yarn install --frozen-lockfile
+
+      - name: Check min-release-age (7 days)
+        working-directory: package
+        run: |
+          node << 'SCRIPT'
+          const { execSync } = require('child_process');
+          const fs = require('fs');
+          const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+          const MIN_AGE_DAYS = 7;
+          const MIN_AGE_MS = MIN_AGE_DAYS * 24 * 60 * 60 * 1000;
+          const now = Date.now();
+          const violations = [];
+          const deps = { ...pkg.dependencies, ...pkg.devDependencies };
+
+          for (const name of Object.keys(deps)) {
+            try {
+              const modPkg = JSON.parse(fs.readFileSync(`node_modules/${name}/package.json`, 'utf8'));
+              const version = modPkg.version;
+              const timeJson = execSync(`npm view "${name}" time --json 2>/dev/null`, { encoding: 'utf8' });
+              const times = JSON.parse(timeJson);
+              if (!times[version]) continue;
+              const publishDate = new Date(times[version]);
+              const ageMs = now - publishDate.getTime();
+              if (ageMs < MIN_AGE_MS) {
+                const ageDays = (ageMs / (24 * 60 * 60 * 1000)).toFixed(1);
+                violations.push(`${name}@${version} - published ${ageDays} days ago (${publishDate.toISOString()})`);
+              }
+            } catch (e) { /* skip private/unreachable packages */ }
+          }
+
+          if (violations.length > 0) {
+            console.error('\n❌ min-release-age check FAILED\n');
+            console.error(`The following packages were published less than ${MIN_AGE_DAYS} days ago:`);
+            violations.forEach(v => console.error('  • ' + v));
+            console.error('\nThis is blocked to protect against supply chain attacks.\n');
+            process.exit(1);
+          }
+          console.log(`✅ All direct dependencies pass min-release-age check (${MIN_AGE_DAYS} days)`);
+          SCRIPT
 
       - name: Build
         run: |
