@@ -32,6 +32,9 @@ jobs:
       - name: Prepare Yarn 3.4.1
         run: corepack prepare yarn@3.4.1 --activate
 
+      - name: Set min-release-age
+        run: echo "min-release-age=7d" >> .npmrc
+
       - name: Install package dependencies
         run: |
           cd package
