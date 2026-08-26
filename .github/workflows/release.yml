@@ -18,10 +18,9 @@ jobs:
 
     steps:
       - name: Use Node.js v${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
-          always-auth: true
 
       - name: Checkout
         uses: actions/checkout@v3
@@ -67,11 +66,10 @@ jobs:
 
     steps:
       - name: Use Node.js v${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
           registry-url: "https://npm.pkg.github.com"
-          always-auth: true
 
       - name: Fetch cached workspace
         uses: actions/cache@v3
@@ -107,11 +105,10 @@ jobs:
 
     steps:
       - name: Use Node.js v${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
           registry-url: "https://registry.npmjs.org"
-          always-auth: true
 
       - name: Fetch cached workspace
         uses: actions/cache@v3
